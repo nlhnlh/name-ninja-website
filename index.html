@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Ninja - Master Names, Build Connections</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .name-tag {
+            background: white;
+            border: 3px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .name-tag .hello {
+            color: #ff0000;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .name-tag .name {
+            color: #333;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab-button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .tab-button:hover, .tab-button.active {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #e8f4fd;
+        }
+
+        .tab-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .training-interface {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .face-preview {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #666;
+            border: 5px solid rgba(255,255,255,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        .input-group input {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            margin: 10px;
+            font-size: 1rem;
+            min-width: 200px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(238, 90, 90, 0.4);
+        }
+
+        .demo-name {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            font-weight: bold;
+            color: #e8f4fd;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .name-tag .name {
+                font-size: 1.5rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-button {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="main-title">Name Ninja</h1>
+            <p class="subtitle">Master Names, Build Connections and Excel in Business</p>
+            
+            <div class="name-tag">
+                <div class="hello">HELLO MY NAME IS</div>
+                <div class="name">Name Ninja</div>
+            </div>
+        </header>
+
+        <div class="section">
+            <h2>Why Name Ninja Works</h2>
+            <div class="tabs">
+                <button class="tab-button active" onclick="showTab('rapid-recall')">Rapid Recall</button>
+                <button class="tab-button" onclick="showTab('build-rapport')">Build Rapport</button>
+                <button class="tab-button" onclick="showTab('memorable')">Memorable</button>
+            </div>
+            
+            <div id="rapid-recall" class="tab-content active">
+                <h3>🧠 Rapid Recall</h3>
+                <p>Train your brain to remember names instantly through proven memory techniques and repetition patterns. Our scientifically-backed methods help you recall names effortlessly in any situation.</p>
+            </div>
+            
+            <div id="build-rapport" class="tab-content">
+                <h3>🤝 Build Rapport</h3>
+                <p>Create meaningful connections by mastering the art of name retention. When you remember someone's name, you show respect and build trust, opening doors to stronger professional and personal relationships.</p>
+            </div>
+            
+            <div id="memorable" class="tab-content">
+                <h3>✨ Memorable</h3>
+                <p>Make people's names stick in your memory through creative association techniques and visual memory tricks. Transform forgettable introductions into lasting impressions.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Three-Phase Approach</h2>
+            <div class="tabs">
+                <button class="tab-button active" onclick="showPhaseTab('preparation')">Preparation</button>
+                <button class="tab-button" onclick="showPhaseTab('execution')">Execution</button>
+                <button class="tab-button" onclick="showPhaseTab('reinforcement')">Reinforcement</button>
+            </div>
+            
+            <div id="preparation" class="tab-content active">
+                <h3>📋 Preparation</h3>
+                <p>Get ready for events by studying attendee lists, practicing pronunciation, and setting memory goals.</p>
+            </div>
+            
+            <div id="execution" class="tab-content">
+                <h3>⚡ Execution</h3>
+                <p>Apply active listening techniques, create instant associations, and use repetition strategies during conversations.</p>
+            </div>
+            
+            <div id="reinforcement" class="tab-content">
+                <h3>🎯 Reinforcement</h3>
+                <p>Strengthen memories through spaced repetition, follow-up interactions, and continuous practice sessions.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Training Interface Preview</h2>
+            <div class="training-interface">
+                <div class="face-preview" id="face-display">
+                    👤
+                </div>
+                <div class="demo-name" id="display-name">Click "Add Person" to start training</div>
+                
+                <div class="input-group">
+                    <input type="text" id="person-name" placeholder="Enter person's name" />
+                    <input type="text" id="person-detail" placeholder="Add memorable detail" />
+                </div>
+                
+                <button class="btn" onclick="addPerson()">Add Person</button>
+                <button class="btn" onclick="testMemory()">Test Memory</button>
+                <button class="btn" onclick="resetTraining()">Reset</button>
+                
+                <div id="training-feedback" style="margin-top: 20px; font-size: 1.1rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality for "Why Name Ninja Works"
+        function showTab(tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Tab functionality for "Three-Phase Approach"
+        function showPhaseTab(tabId) {
+            // Hide all phase tab contents
+            const contents = document.querySelectorAll('#preparation, #execution, #reinforcement');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from phase buttons
+            const phaseButtons = document.querySelectorAll('.section:nth-child(3) .tab-button');
+            phaseButtons.forEach(button => button.classList.remove('active'));
+            
+            // Show selected phase tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Training interface functionality
+        let people = [];
+        let currentPerson = null;
+
+        function addPerson() {
+            const name = document.getElementById('person-name').value.trim();
+            const detail = document.getElementById('person-detail').value.trim();
+            
+            if (!name) {
+                document.getElementById('training-feedback').innerHTML = '❌ Please enter a name';
+                return;
+            }
+
+            const person = {
+                name: name,
+                detail: detail,
+                emoji: getRandomEmoji()
+            };
+
+            people.push(person);
+            displayPerson(person);
+            
+            document.getElementById('person-name').value = '';
+            document.getElementById('person-detail').value = '';
+            document.getElementById('training-feedback').innerHTML = `✅ Added ${name} to training!`;
+        }
+
+        function displayPerson(person) {
+            document.getElementById('face-display').textContent = person.emoji;
+            document.getElementById('display-name').innerHTML = 
+                `<strong>${person.name}</strong>${person.detail ? `<br><em>${person.detail}</em>` : ''}`;
+            currentPerson = person;
+        }
+
+        function testMemory() {
+            if (people.length === 0) {
+                document.getElementById('training-feedback').innerHTML = '❌ Add some people first!';
+                return;
+            }
+
+            const randomPerson = people[Math.floor(Math.random() * people.length)];
+            document.getElementById('face-display').textContent = randomPerson.emoji;
+            document.getElementById('display-name').textContent = 'Who is this person?';
+            
+            setTimeout(() => {
+                displayPerson(randomPerson);
+                document.getElementById('training-feedback').innerHTML = `🎯 Memory test: It's ${randomPerson.name}!`;
+            }, 3000);
+        }
+
+        function resetTraining() {
+            people = [];
+            currentPerson = null;
+            document.getElementById('face-display').textContent = '👤';
+            document.getElementById('display-name').textContent = 'Click "Add Person" to start training';
+            document.getElementById('training-feedback').innerHTML = '🔄 Training reset!';
+        }
+
+        function getRandomEmoji() {
+            const emojis = ['😊', '🙂', '😎', '🤓', '😇', '🤗', '😋', '🥰', '😌', '🤔', '👨', '👩', '🧑', '👦', '👧'];
+            return emojis[Math.floor(Math.random() * emojis.length)];
+        }
+    </script>
+</body>
+</html>
